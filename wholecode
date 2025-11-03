@@ -1,0 +1,238 @@
+<?php
+// =============================================
+// DIGITAL LIBRARY ORGANIZER (Styled Version)
+// =============================================
+
+// ---------------------------------------------
+// PART I — Recursive Directory Display
+// ---------------------------------------------
+$library = [
+    "Fiction" => [
+        "Fantasy" => ["Harry Potter", "The Hobbit"],
+        "Mystery" => ["Sherlock Holmes", "Gone Girl"]
+    ],
+    "Non-Fiction" => [
+        "Science" => ["A Brief History of Time", "The Selfish Gene"],
+        "Biography" => ["Steve Jobs", "Becoming"]
+    ]
+];
+
+// Recursive function to display nested folders and books
+function displayLibrary($library, $indent = 0)
+{
+    foreach ($library as $category => $items) {
+        echo str_repeat("&nbsp;", $indent * 4) . "<div class='category'>$category</div>";
+        if (is_array($items)) {
+            displayLibrary($items, $indent + 1);
+        } else {
+            echo str_repeat("&nbsp;", ($indent + 1) * 4) . "<div class='book'>$items</div>";
+        }
+    }
+}
+
+// ---------------------------------------------
+// PART II — Hash Table for Book Details
+// ---------------------------------------------
+$bookInfo = [
+    "Harry Potter" => ["author" => "J.K. Rowling", "year" => 1997, "genre" => "Fantasy"],
+    "The Hobbit" => ["author" => "J.R.R. Tolkien", "year" => 1937, "genre" => "Fantasy"],
+    "Sherlock Holmes" => ["author" => "Arthur Conan Doyle", "year" => 1892, "genre" => "Mystery"],
+    "Gone Girl" => ["author" => "Gillian Flynn", "year" => 2012, "genre" => "Mystery"],
+    "A Brief History of Time" => ["author" => "Stephen Hawking", "year" => 1988, "genre" => "Science"],
+    "The Selfish Gene" => ["author" => "Richard Dawkins", "year" => 1976, "genre" => "Science"],
+    "Steve Jobs" => ["author" => "Walter Isaacson", "year" => 2011, "genre" => "Biography"],
+    "Becoming" => ["author" => "Michelle Obama", "year" => 2018, "genre" => "Biography"]
+];
+
+function getBookInfo($title, $bookInfo)
+{
+    if (array_key_exists($title, $bookInfo)) {
+        $info = $bookInfo[$title];
+        echo "<div class='card'>";
+        echo "<h3>$title</h3>";
+        echo "<p><strong>Author:</strong> " . $info['author'] . "</p>";
+        echo "<p><strong>Year:</strong> " . $info['year'] . "</p>";
+        echo "<p><strong>Genre:</strong> " . $info['genre'] . "</p>";
+        echo "</div>";
+    } else {
+        echo "<p class='notfound'>Book not found.</p>";
+    }
+}
+
+// ---------------------------------------------
+// PART III — Binary Search Tree (BST)
+// ---------------------------------------------
+class Node
+{
+    public $data;
+    public $left;
+    public $right;
+    public function __construct($data)
+    {
+        $this->data = $data;
+        $this->left = null;
+        $this->right = null;
+    }
+}
+
+class BinarySearchTree
+{
+    public $root;
+    public function __construct()
+    {
+        $this->root = null;
+    }
+
+    public function insert($data)
+    {
+        $this->root = $this->_insert($this->root, $data);
+    }
+
+    private function _insert($node, $data)
+    {
+        if ($node === null) return new Node($data);
+        if ($data < $node->data)
+            $node->left = $this->_insert($node->left, $data);
+        else
+            $node->right = $this->_insert($node->right, $data);
+        return $node;
+    }
+
+    public function search($data)
+    {
+        return $this->_search($this->root, $data);
+    }
+
+    private function _search($node, $data)
+    {
+        if ($node === null) return false;
+        if ($data == $node->data) return true;
+        if ($data < $node->data)
+            return $this->_search($node->left, $data);
+        else
+            return $this->_search($node->right, $data);
+    }
+
+    public function inorderTraversal($node)
+    {
+        if ($node !== null) {
+            $this->inorderTraversal($node->left);
+            echo "<li>$node->data</li>";
+            $this->inorderTraversal($node->right);
+        }
+    }
+}
+
+// Build BST
+$bst = new BinarySearchTree();
+foreach (array_keys($bookInfo) as $title) {
+    $bst->insert($title);
+}
+
+// For demonstration
+$searchTitle = "Gone Girl";
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Digital Library Organizer</title>
+<style>
+    body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #f5f7fa;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+    }
+    h1, h2 {
+        text-align: center;
+        color: #2c3e50;
+    }
+    .section {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        margin: 20px auto;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        max-width: 800px;
+    }
+    .category {
+        font-weight: bold;
+        color: #1e90ff;
+        margin-top: 5px;
+    }
+    .book {
+        color: #444;
+        margin-left: 20px;
+        padding-left: 10px;
+        border-left: 2px solid #ddd;
+    }
+    .card {
+        background: #f8fafc;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 10px 0;
+        border-left: 5px solid #3498db;
+    }
+    .notfound {
+        color: red;
+        font-style: italic;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    li {
+        padding: 5px 0;
+        border-bottom: 1px dashed #ddd;
+    }
+    .found {
+        background: #d1fae5;
+        color: #065f46;
+        padding: 10px;
+        border-radius: 6px;
+    }
+    .notfound-msg {
+        background: #fee2e2;
+        color: #991b1b;
+        padding: 10px;
+        border-radius: 6px;
+    }
+</style>
+</head>
+<body>
+
+<h1>📚 Digital Library Organizer</h1>
+
+<div class="section">
+    <h2>📂 Library Categories (Recursion)</h2>
+    <?php displayLibrary($library); ?>
+</div>
+
+<div class="section">
+    <h2>🔎 Book Lookup Example (Hash Table)</h2>
+    <?php getBookInfo("Harry Potter", $bookInfo); ?>
+</div>
+
+<div class="section">
+    <h2>🔤 Binary Search Tree (Alphabetical Order)</h2>
+    <ul>
+        <?php $bst->inorderTraversal($bst->root); ?>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>🔍 Search Example (BST Search)</h2>
+    <p>Searching for <b><?php echo $searchTitle; ?></b>...</p>
+    <?php
+    if ($bst->search($searchTitle)) {
+        echo "<div class='found'>✅ Book found!</div>";
+    } else {
+        echo "<div class='notfound-msg'>❌ Book not found.</div>";
+    }
+    ?>
+</div>
+
+</body>
+</html>
