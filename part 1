@@ -1,0 +1,24 @@
+Part I — Recursive Directory Display
+
+Open recursion.php or the integrated file.
+
+It defines a nested PHP array $library to simulate categorized folders.
+
+The function displayLibrary() recursively displays all categories and books with indentation.
+
+Expected output:
+
+Fiction
+    Fantasy
+        Harry Potter
+        The Hobbit
+    Mystery
+        Sherlock Holmes
+        Gone Girl
+Non-Fiction
+    Science
+        A Brief History of Time
+        The Selfish Gene
+    Biography
+        Steve Jobs
+        Becoming
