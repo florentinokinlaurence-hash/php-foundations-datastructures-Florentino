@@ -1,0 +1,14 @@
+Part II — Hash Table for Book Details
+
+Open hashtable.php or view the integrated version.
+
+The $bookInfo associative array stores author, year, and genre.
+
+Use getBookInfo($title, $bookInfo) to display details.
+
+Example:
+
+Title: Harry Potter
+Author: J.K. Rowling
+Year: 1997
+Genre: Fantasy
