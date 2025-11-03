@@ -1,14 +1,17 @@
-Part II — Hash Table for Book Details
+### 🔎 Part II — Hash Table for Book Details
+**File:** `hashtable.php` (or included in `main.php`)
 
-Open hashtable.php or view the integrated version.
+**What it does:**  
+Uses PHP associative arrays to store book details like author, year, and genre.  
+Includes a function `getBookInfo($title, $bookInfo)` to retrieve book details efficiently.
 
-The $bookInfo associative array stores author, year, and genre.
+**Run it by:**  
+Executing the file or calling `getBookInfo("Harry Potter", $bookInfo)` in code.
 
-Use getBookInfo($title, $bookInfo) to display details.
-
-Example:
-
+**Example Output:**
 Title: Harry Potter
 Author: J.K. Rowling
 Year: 1997
 Genre: Fantasy
+If the book does not exist:
+Book not found.
